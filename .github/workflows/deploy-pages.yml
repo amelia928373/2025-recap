@@ -1,0 +1,29 @@
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js (optional)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Prepare
+        run: |
+          echo "No build step configured. Deploying repository root to gh-pages."
+      - name: Publish to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          keep_files: true
+
+# Notes:
+# - This workflow will publish the repository root to the gh-pages branch when you push to main.
+# - If your project has a build step, update `publish_dir` to the build output (e.g. ./build or ./dist)
+# - Make sure Actions has "Read and write" workflow permissions so the GITHUB_TOKEN can push the gh-pages branch.
